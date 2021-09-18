@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_account"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_baseline_card_calendar"
+            android:title="@string/menu_calendar"/>
+        <item
+            android:id="@+id/nav_leader_board"
+            android:icon="@drawable/ic_baseline_leaderboard"
+            android:title="@string/menu_leader_board" />
+        <item
+            android:id="@+id/nav_message"
+            android:icon="@drawable/ic_baseline_emoji_people_24"
+            android:title="@string/menu_message" />
+        <item
+            android:id="@+id/nav_matchplay"
+            android:icon="@drawable/ic_baseline_sports_handball_24"
+            android:title="@string/menu_match" />
+
+    </group>
+</menu>

@@ -1,0 +1,70 @@
+--- 
+stages: 
+  - android-build
+  - android-test
+  - mavenbuild
+  - maventest
+  - autodeploy
+
+
+android-build: 
+  artifacts: 
+    paths: 
+      - Android_test/app/build/outputs/
+  before_script: 
+    - "export GRADLE_USER_HOME=`pwd`/.gradle"
+    - chmod +x ./Frontend/SportsLeague/gradlew
+  image: "javiersantos/android-ci:latest"
+  script: 
+    - cd Frontend/SportsLeague
+    - ./gradlew assemble
+  stage: android-build
+  tags: 
+    - dock
+
+android-test:
+    before_script:
+        - "export GRADLE_USER_HOME=`pwd`/.gradle"
+        - chmod +x ./Frontend/SportsLeague/gradlew
+    image: "javiersantos/android-ci:latest"
+    script: 
+        - cd Frontend/SportsLeague
+        - ./gradlew test
+    stage: android-test
+    tags: 
+        - dock
+
+maven-build: 
+  script: 
+    - cd Backend/SportLeague
+    - mvn package -B
+  stage: mavenbuild
+  tags: 
+    - BACKEND
+    
+maventest: 
+  artifacts: 
+    paths: 
+      - Backend/SportLeague/target/*.jar
+  script: 
+    - cd Backend/SportLeague
+    - mvn test
+    - mvn package -B
+  stage: maventest
+  tags: 
+    - BACKEND
+    
+autodeploy:
+  stage: autodeploy
+  tags: 
+    - BACKEND
+  script: 
+    - cd Backend/SportLeague
+    - mvn test
+    - mvn package -B
+    - sudo mv target/*.jar /target/web-demo.jar
+    - sudo systemctl stop web-demo
+    - sudo systemctl start web-demo
+  stage: autodeploy
+  tags: 
+    - BACKEND
